@@ -24,15 +24,15 @@ public class RestaurantController {
         return ResponseEntity.ok(list);
     }
 
-//    @GetMapping(params = "cuisine")
-//    public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@RequestParam String cuisine){
-//        try{
-//            List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
-//            return ResponseEntity.ok().body(restaurants);
-//        } catch(Exception e){
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
+    @GetMapping(params = "cuisine")
+    public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@RequestParam(value = "cuisine") String cuisine){
+        try{
+            List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
+            return ResponseEntity.ok().body(restaurants);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     @PostMapping("/")
     public ResponseEntity<?> addRestaurant(@RequestBody Restaurant restaurant) {
@@ -47,6 +47,9 @@ public class RestaurantController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRestaurant(@PathVariable Long id) {
         try {
+            if (!restaurantService.existById(id)) {
+                return ResponseEntity.status(404).body("The restaurant with ID " + id + " does not exist.");
+            }
             restaurantService.deleteRestaurant(id);
             return ResponseEntity.status(204).build();
         } catch (Exception e) {

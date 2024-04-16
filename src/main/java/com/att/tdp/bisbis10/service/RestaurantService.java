@@ -17,9 +17,9 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
-//    public List<Restaurant> getRestaurantsByCuisine(String cusineName){
-//        return restaurantRepository.findByCuisinesContaining(cusineName);
-//    }
+    public List<Restaurant> getRestaurantsByCuisine(String cusineName){
+        return restaurantRepository.getRestaurantsByCuisine(cusineName);
+    }
 
     public void addRestaurant(Restaurant restaurant){
         restaurantRepository.save(restaurant);
@@ -27,5 +27,9 @@ public class RestaurantService {
 
     public void deleteRestaurant(Long id){
         restaurantRepository.deleteById(id);
+    }
+
+    public boolean existById (Long id){
+        return restaurantRepository.existsById(id);
     }
 }
