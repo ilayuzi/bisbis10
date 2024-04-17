@@ -3,9 +3,12 @@ package com.att.tdp.bisbis10.service;
 import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.FileSystemNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RestaurantService {
@@ -31,5 +34,10 @@ public class RestaurantService {
 
     public boolean existById (Long id){
         return restaurantRepository.existsById(id);
+    }
+
+    public Restaurant findById(Long id) {
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
+        return optionalRestaurant.orElseThrow(() -> new FileSystemNotFoundException("Restaurant not found with id: " + id));
     }
 }

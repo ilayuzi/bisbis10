@@ -51,12 +51,12 @@
 
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>projectlombok</id>
-			<url>https://projectlombok.org/pom.xml</url>
-		</repository>
-	</repositories>
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>projectlombok</id>-->
+<!--			<url>https://projectlombok.org/pom.xml</url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
 
 	<build>
 		<plugins>
