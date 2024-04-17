@@ -2,7 +2,9 @@ package com.att.tdp.bisbis10.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Restaurants")
@@ -14,12 +16,31 @@ public class Restaurant {
 
     private String name;
 
+//    @OneToMany(mappedBy = "restaurant_id")
     private float rating;
 
     private boolean isKosher;
 
     @ElementCollection
-    private List<String> cuisines;
+//    @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
+//    @Column(name = "cuisine")
+    private Set<String> cuisines = new HashSet<>();
+//    private List<String> cuisines;
+
+
+//    @ManyToMany(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "restaurants_ratings",
+//            joinColumns = @JoinColumn(
+//                    name = "restaurant_id",
+//                    referencedColumnName = "id"
+//            ),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "rating_id",
+//                    referencedColumnName = "id"
+//            )
+//    )
+//    private List<Rating> ratings;
 
     // Constructor
     public Restaurant() {
@@ -58,13 +79,21 @@ public class Restaurant {
         isKosher = kosher;
     }
 
-    public List<String> getCuisines() {
+    public Set<String> getCuisines() {
         return cuisines;
     }
 
-    public void setCuisines(List<String> cuisines) {
+    public void setCuisines(Set<String> cuisines) {
         this.cuisines = cuisines;
     }
+
+//    public List<Cuisine> getCuisines() {
+//        return cuisines;
+//    }
+//
+//    public void setCuisines(List<Cuisine> cuisines) {
+//        this.cuisines = cuisines;
+//    }
 
 }
 
