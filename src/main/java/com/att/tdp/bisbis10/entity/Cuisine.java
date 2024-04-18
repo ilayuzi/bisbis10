@@ -1,6 +1,7 @@
 package com.att.tdp.bisbis10.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,11 @@ public class Cuisine {
 
     @ManyToMany(mappedBy = "cuisines")
     private List<Restaurant> restaurants;
+
+//    @ManyToOne
+//    @JoinColumn(name = "restaurant_id")
+//    @JsonBackReference
+//    private Restaurant restaurant;
 
     public Cuisine() {
 

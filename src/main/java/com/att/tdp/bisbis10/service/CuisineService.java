@@ -12,21 +12,25 @@ import java.util.List;
 public class CuisineService {
 
     @Autowired
-    private CuisineRepository cusineRepository;
+    private CuisineRepository cuisineRepository;
 
     public List<Cuisine> getAllCuisines() {
-        return cusineRepository.findAll();
+        return cuisineRepository.findAll();
     }
 
     public void addCusine(Cuisine cusine) {
-        cusineRepository.save(cusine);
+        cuisineRepository.save(cusine);
     }
 
     public void deleteCusine(Integer id) {
-        cusineRepository.deleteById(id);
+        cuisineRepository.deleteById(id);
     }
 
     public boolean existById(Integer id) {
-        return cusineRepository.existsById(id);
+        return cuisineRepository.existsById(id);
+    }
+
+    public List<Cuisine> getCuisinesByNames(List<String> cuisineNames){
+        return cuisineRepository.findAllByCuisineNameIn(cuisineNames);
     }
 }

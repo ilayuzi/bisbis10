@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DishService {
@@ -23,6 +24,18 @@ public class DishService {
 
     public void deleteDish(Integer id){
         dishRepository.deleteById(id);
+    }
+
+    public Dish getDishById(Integer id){
+        return dishRepository.findById(id).orElse(null);
+    }
+
+    public void updateDish(Dish updatedDish){
+        dishRepository.save(updatedDish);
+    }
+
+    public Dish getDishByIdAndRestaurantId(Integer dishId, Integer restaurantId) {
+        return dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
     }
 
 

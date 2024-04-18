@@ -1,6 +1,9 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.AnyDiscriminator;
@@ -43,9 +46,13 @@ public class Rating {
 //    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
 //    private Restaurant restaurant;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
     private Restaurant restaurant;
+
+//    @JsonProperty("restaurant_id")
+//    private Integer restaurantId = restaurant.getId();
 
     public Rating(){
     }

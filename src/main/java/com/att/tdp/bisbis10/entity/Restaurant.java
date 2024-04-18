@@ -1,8 +1,11 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,10 +32,12 @@ public class Restaurant {
     )
     private Integer id;
 
+    @NotNull
     private String name;
 
-    private float averageRating;
+    private double averageRating = getAverageRating();
 
+    @NotNull
     private boolean isKosher;
 
 //    @ElementCollection
@@ -47,65 +52,33 @@ public class Restaurant {
             joinColumns = @JoinColumn(name = "restaurant_id"),
             inverseJoinColumns = @JoinColumn(name = "cuisine_id")
     )
+
+//    @OneToMany(mappedBy = "restaurant")
+//    @JsonManagedReference
     private List<Cuisine> cuisines;
 
     @OneToMany(mappedBy = "restaurant")
     @JsonManagedReference
     private List<Dish> dishes;
 
+    @OneToMany(mappedBy = "restaurant")
+    @JsonManagedReference
+    private List<Rating> ratings;
+
 
     // Constructor
     public Restaurant() {
     }
 
-//    // Getters and setters
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public float getRating() {
-//        return rating;
-//    }
-//
-//    public void setRating(float rating) {
-//        this.rating = rating;
-//    }
-//
-//    public boolean isKosher() {
-//        return isKosher;
-//    }
-//
-//    public void setKosher(boolean kosher) {
-//        isKosher = kosher;
-//    }
-//
-//    public Set<String> getCuisines() {
-//        return cuisines;
-//    }
-//
-//    public void setCuisines(Set<String> cuisines) {
-//        this.cuisines = cuisines;
-//    }
+    public double getAverageRating () {
+        if(ratings == null || ratings.isEmpty()){
+            return 0.0;
+        }
+        var averageRating = this.ratings.stream().mapToDouble(Rating::getRating).average().orElse(0.0);
+        String roundedAverageRating = String.format("%.2f", averageRating);
+        return Double.parseDouble(roundedAverageRating);
 
-//    public List<Cuisine> getCuisines() {
-//        return cuisines;
-//    }
-//
-//    public void setCuisines(List<Cuisine> cuisines) {
-//        this.cuisines = cuisines;
-//    }
+    }
 
 }
 

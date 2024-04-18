@@ -28,7 +28,7 @@ public class Dish {
 
     private String description;
 
-    private float price;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")

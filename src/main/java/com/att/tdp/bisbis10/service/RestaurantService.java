@@ -28,8 +28,16 @@ public class RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
+    public Restaurant getRestaurantById(Integer id){
+        return restaurantRepository.findById(id).orElse(null);
+    }
+
     public void deleteRestaurant(Integer id){
         restaurantRepository.deleteById(id);
+    }
+
+    public void updateRestaurant(Restaurant updatedRestaurant){
+        restaurantRepository.save(updatedRestaurant);
     }
 
     public boolean existById (Integer id){
