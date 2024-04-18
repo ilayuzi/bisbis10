@@ -13,8 +13,17 @@ import java.util.List;
 @Table (name="Cuisines")
 public class Cuisine {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "cuisines_seq"
+    )
+    @SequenceGenerator(
+            name = "cuisines_seq",
+            sequenceName = "cuisines_seq",
+            allocationSize = 1
+
+    )
+    private Integer id;
 
     @Column(nullable = false)
     private String cuisineName;

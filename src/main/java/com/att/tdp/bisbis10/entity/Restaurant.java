@@ -16,12 +16,20 @@ import java.util.Set;
 @Table(name = "Restaurants")
 public class Restaurant {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    @Id // primary key
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "restaurants_seq"
+    )
+    @SequenceGenerator(
+            name = "restaurants_seq",
+            sequenceName = "restaurants_seq",
+            allocationSize = 1
+
+    )
+    private Integer id;
 
     private String name;
-
 
     private float averageRating;
 
@@ -44,6 +52,7 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant")
     @JsonManagedReference
     private List<Dish> dishes;
+
 
     // Constructor
     public Restaurant() {

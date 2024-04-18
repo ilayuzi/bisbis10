@@ -35,7 +35,7 @@ public class RatingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRating(@PathVariable Long id) {
+    public ResponseEntity<?> deleteRating(@PathVariable Integer id) {
         try {
             if (!raitingService.existById(id)) {
                 return ResponseEntity.status(404).body("The rating with ID " + id + " does not exist.");

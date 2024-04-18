@@ -29,7 +29,7 @@ public class DishController {
     }
 
     @PostMapping("/restaurants/{id}/dishes")
-    public ResponseEntity<?> addDish(@RequestBody Dish dish, @PathVariable Long id) {
+    public ResponseEntity<?> addDish(@RequestBody Dish dish, @PathVariable Integer id) {
         try {
             Optional<Restaurant> optionalRestaurant = Optional.ofNullable(restaurantService.findById(id));
             if (optionalRestaurant.isPresent()) {
@@ -47,7 +47,7 @@ public class DishController {
     }
 
     @DeleteMapping("/restaurants/{id}/dishes/{dishId}")
-    public ResponseEntity<?> deleteDish(@PathVariable Long dishId) {
+    public ResponseEntity<?> deleteDish(@PathVariable Integer dishId) {
         try {
             dishService.deleteDish(dishId);
             return ResponseEntity.status(204).build();

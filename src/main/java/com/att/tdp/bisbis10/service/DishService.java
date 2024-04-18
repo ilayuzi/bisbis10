@@ -21,7 +21,7 @@ public class DishService {
         dishRepository.save(dish);
     }
 
-    public void deleteDish(Long id){
+    public void deleteDish(Integer id){
         dishRepository.deleteById(id);
     }
 

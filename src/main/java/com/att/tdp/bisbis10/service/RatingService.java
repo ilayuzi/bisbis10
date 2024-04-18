@@ -21,11 +21,11 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
-    public void deleteRating (Long id){
+    public void deleteRating (Integer id){
         ratingRepository.deleteById(id);
     }
 
-    public boolean existById (Long id){
+    public boolean existById (Integer id){
         return ratingRepository.existsById(id);
     }
 }

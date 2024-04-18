@@ -45,7 +45,7 @@ public class RestaurantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRestaurant(@PathVariable Long id) {
+    public ResponseEntity<?> deleteRestaurant(@PathVariable Integer id) {
         try {
             if (!restaurantService.existById(id)) {
                 return ResponseEntity.status(404).body("The restaurant with ID " + id + " does not exist.");

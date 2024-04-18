@@ -22,11 +22,11 @@ public class CuisineService {
         cusineRepository.save(cusine);
     }
 
-    public void deleteCusine(Long id) {
+    public void deleteCusine(Integer id) {
         cusineRepository.deleteById(id);
     }
 
-    public boolean existById(Long id) {
+    public boolean existById(Integer id) {
         return cusineRepository.existsById(id);
     }
 }

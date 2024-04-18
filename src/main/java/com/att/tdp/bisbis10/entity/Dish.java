@@ -11,8 +11,17 @@ import lombok.Setter;
 @Entity
 @Table(name = "Dishes")
 public class Dish {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "dishes_seq"
+    )
+    @SequenceGenerator(
+            name = "dishes_seq",
+            sequenceName = "dishes_seq",
+            allocationSize = 1
+    )
     private Integer id;
 
     private String name;

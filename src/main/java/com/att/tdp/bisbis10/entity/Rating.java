@@ -1,18 +1,34 @@
 package com.att.tdp.bisbis10.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.AnyDiscriminator;
 
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "Ratings")
 public class Rating {
+
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "ratings_seq"
+    )
+    @SequenceGenerator(
+            name = "ratings_seq",
+            sequenceName = "ratings_seq",
+            allocationSize = 1
+
+    )
+    private Integer id;
 
 //    @Column(name = "restaurant_id")
 //    private Long restaurantId;
+
 
     private float rating;
 
@@ -34,13 +50,13 @@ public class Rating {
     public Rating(){
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
 //    public Long getRestaurantId() {
 //        return restaurantId;

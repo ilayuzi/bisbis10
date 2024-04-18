@@ -28,15 +28,15 @@ public class RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
-    public void deleteRestaurant(Long id){
+    public void deleteRestaurant(Integer id){
         restaurantRepository.deleteById(id);
     }
 
-    public boolean existById (Long id){
+    public boolean existById (Integer id){
         return restaurantRepository.existsById(id);
     }
 
-    public Restaurant findById(Long id) {
+    public Restaurant findById(Integer id) {
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
         return optionalRestaurant.orElseThrow(() -> new FileSystemNotFoundException("Restaurant not found with id: " + id));
     }

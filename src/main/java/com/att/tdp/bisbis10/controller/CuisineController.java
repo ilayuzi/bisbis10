@@ -34,7 +34,7 @@ public class CuisineController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCuisine(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCuisine(@PathVariable Integer id) {
         try {
             cuisineService.deleteCusine(id);
             return ResponseEntity.status(204).build();
