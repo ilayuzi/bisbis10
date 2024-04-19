@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -30,7 +31,8 @@ public class Cuisine {
     private String cuisineName;
 
     @ManyToMany(mappedBy = "cuisines")
-    private List<Restaurant> restaurants;
+    @JsonBackReference
+    private List<Restaurant> restaurants = new ArrayList<>();
 
 //    @ManyToOne
 //    @JoinColumn(name = "restaurant_id")

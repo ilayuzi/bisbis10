@@ -52,6 +52,7 @@ public class Restaurant {
             joinColumns = @JoinColumn(name = "restaurant_id"),
             inverseJoinColumns = @JoinColumn(name = "cuisine_id")
     )
+    @JsonManagedReference
 
 //    @OneToMany(mappedBy = "restaurant")
 //    @JsonManagedReference

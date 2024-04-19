@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 @RequestMapping("/restaurants")
@@ -42,9 +40,55 @@ public class RestaurantController {
         }
     }
 
+//    @PostMapping("/")
+//    public ResponseEntity<?> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
+//        try {
+//            restaurantService.addRestaurant(restaurant);
+//            return ResponseEntity.status(201).build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error adding restaurant: " + e.getMessage());
+//        }
+//    }
+
     @PostMapping("/")
-    public ResponseEntity<?> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
+    public ResponseEntity<?> addRestaurant(@Valid @RequestBody Map<String,Object> restaurantDetails) {
         try {
+            Restaurant restaurant = new Restaurant();
+            restaurant.setName((String) restaurantDetails.get("name"));
+            restaurant.setKosher((boolean) restaurantDetails.get("isKosher"));
+            List<String> cuisineNames = (List<String>) restaurantDetails.get("cuisines");
+            if (cuisineNames != null && !cuisineNames.isEmpty()) {
+                List<Cuisine> newCuisines = new ArrayList<>();
+                for (String name : cuisineNames){
+                    Optional<Cuisine> optionalCuisine = cuisineService.getCuisineByName(name);
+                    if (optionalCuisine.isEmpty()) {
+                        Cuisine cuisine = new Cuisine();
+                        cuisine.setCuisineName(name);
+                        newCuisines.add(cuisine);
+                } else {
+                        Cuisine cuisine = optionalCuisine.get();
+                        newCuisines.add(cuisine);
+                    }
+                }
+
+                restaurant.setCuisines(newCuisines);
+
+//              Add restaurant to the restaurants list of each cuisine
+                for (Cuisine cuisine : newCuisines) {
+                    cuisine.getRestaurants().add(restaurant);
+                    cuisineService.addCusine(cuisine);
+                }
+
+//                List<Cuisine> cuisines = cuisineService.getCuisinesByNames(cuisineNames);
+//                cuisines.removeIf(Objects::isNull);
+//                restaurant.setCuisines(cuisines);
+
+//                 Add restaurant to the restaurants list of each cuisine
+//                for (Cuisine cuisine : cuisines) {
+//                    cuisine.getRestaurants().add(restaurant);
+//                    cuisineService.addCusine(cuisine);
+//                }
+            }
             restaurantService.addRestaurant(restaurant);
             return ResponseEntity.status(201).build();
         } catch (Exception e) {
@@ -98,6 +142,21 @@ public class RestaurantController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error deleting restaurant: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/createRestaurant")
+    public String createRestaurant(@RequestBody Restaurant entity) {
+
+        // new Project
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName(entity.getName());
+        restaurant.setKosher(entity.isKosher());
+
+
+        // save Project
+        restaurantService.addRestaurant(restaurant);
+
+        return "Restaurant saved!!!";
     }
 
 
