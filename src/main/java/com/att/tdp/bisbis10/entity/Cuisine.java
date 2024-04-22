@@ -3,6 +3,9 @@ package com.att.tdp.bisbis10.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,38 +30,18 @@ public class Cuisine {
     )
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(unique = true)
+    @NotBlank
     private String cuisineName;
 
     @ManyToMany(mappedBy = "cuisines")
     @JsonBackReference
     private List<Restaurant> restaurants = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "restaurant_id")
-//    @JsonBackReference
-//    private Restaurant restaurant;
-
     public Cuisine() {
 
     }
 
-//    // Getters and setters
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getCuisineName() {
-//        return cuisineName;
-//    }
-//
-//    public void setCuisineName(String name) {
-//        this.cuisineName = name;
-//    }
 
 
 }

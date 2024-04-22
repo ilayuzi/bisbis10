@@ -30,13 +30,16 @@ public class DishController {
     }
 
     @PostMapping("/restaurants/{id}/dishes")
-    public ResponseEntity<?> addDish(@RequestBody Dish dish, @PathVariable Integer id) {
+    public ResponseEntity<?> addDish(@RequestBody AddDishRequest request, @PathVariable Integer id) {
         try {
+            // Checking whether there is a restaurant with the id in order to add the dish to it
             Optional<Restaurant> optionalRestaurant = Optional.ofNullable(restaurantService.findById(id));
             if (optionalRestaurant.isPresent()) {
                 Restaurant restaurant = optionalRestaurant.get();
-                dish.setRestaurant(restaurant);
-                dishService.addDish(dish);
+                String name = request.getName();
+                String description = request.getDescription();
+                double price = request.getPrice();
+                dishService.addDish(name, description, price, restaurant);
                 return ResponseEntity.status(201).build();
             } else {
                 return ResponseEntity.status(404).body("Restaurant not found with id: " + id);
@@ -77,20 +80,11 @@ public class DishController {
     @PatchMapping("/restaurants/{id}/dishes/{dishId}")
     public ResponseEntity<?> updateDish(@PathVariable Integer id, @PathVariable Integer dishId, @RequestBody Map<String, Object> updates) {
         try {
-//            Dish existingDish = dishService.getDishById(dishId);
             Dish existingDish = dishService.getDishByIdAndRestaurantId(dishId,id);
             if(existingDish == null){
                 return ResponseEntity.status(404).body("Dish " + dishId + " not found in restaurant " + id);
             }
-
-            if (updates.containsKey("description")) {
-                existingDish.setDescription((String) updates.get("description"));
-            }
-            if (updates.containsKey("price")) {
-                existingDish.setPrice(((Integer) updates.get("price")).doubleValue());
-            }
-
-            dishService.updateDish(existingDish);
+            dishService.updateDish(existingDish, updates);
             return ResponseEntity.status(200).body("Dish " + dishId + " updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error updating dish: " + e.getMessage());

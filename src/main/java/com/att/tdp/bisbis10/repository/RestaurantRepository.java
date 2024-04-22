@@ -10,8 +10,7 @@ import java.util.List;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> {
-//    @Query("SELECT restaurant_id FROM restaurant_cuisines WHERE :cuisineName MEMBER OF restaurant_cuisines.cuisines")
-    @Query("SELECT DISTINCT r FROM Restaurant r JOIN r.cuisines c WHERE c = :cuisineName")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN r.cuisines c WHERE c.cuisineName = :cuisineName")
     List<Restaurant> getRestaurantsByCuisine(@Param("cuisineName") String cuisineName);
 
 }

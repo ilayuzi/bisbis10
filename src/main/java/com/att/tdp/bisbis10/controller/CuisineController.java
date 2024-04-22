@@ -41,53 +41,15 @@ public class CuisineController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCuisine(@PathVariable Integer id) {
         try {
+            if (!cuisineService.existById(id)) {
+                return ResponseEntity.status(404).body("The cuisine with ID " + id + " does not exist.");
+            }
             cuisineService.deleteCusine(id);
             return ResponseEntity.status(204).build();
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error deleting restaurant: " + e.getMessage());
         }
     }
-
-//    @PostMapping("/createCuisine")
-//    public String createEmployee(@RequestBody Cuisine entity) {
-//        System.out.println("\nCreate a new Employee." + "\n");
-//
-//        // create a new Employee
-//        Cuisine cuisine = new Cuisine();
-//        cuisine.setCuisineName(entity.getCuisineName());
-//
-//        // save Employee
-//        cuisineService.addCusine(cuisine);
-//        return "Cuisine saved!!!";
-//    }
-//
-//    @PostMapping("/createCuisineForRestaurant/{resId}")
-//    public String createCuisineForRestaurant(@RequestBody Cuisine entity,
-//                                           @PathVariable(name = "resId") Integer resId) {
-//
-//        // create a new Employee
-//        Cuisine cuisine = new Cuisine();
-//        cuisine.setCuisineName(entity.getCuisineName());
-//
-//
-//        // save Employee
-//        cuisineService.addCusine(cuisine);
-//
-//        // get a Project
-//        Restaurant restaurant = restaurantService.getRestaurantById(resId);
-//
-//        // create Employee set
-//        List<Cuisine> cuisines = new ArrayList<>();
-//        cuisines.add(cuisine);
-//
-//        // assign Employee Set to Project
-//        restaurant.setCuisines(cuisines);
-//
-//        // save Project
-//        restaurantService.addRestaurant(restaurant);
-//
-//        return "Cuisine saved!!!";
-//    }
 
 
 }

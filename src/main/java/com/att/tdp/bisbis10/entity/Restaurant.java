@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class Restaurant {
     )
     private Integer id;
 
-    @NotNull
+    @NotBlank
     private String name;
 
     private double averageRating = getAverageRating();
@@ -65,6 +66,10 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant")
     @JsonManagedReference
     private List<Rating> ratings;
+
+    @OneToMany(mappedBy = "restaurant")
+    @JsonManagedReference
+    private List<Order> orders;
 
 
     // Constructor
