@@ -3,12 +3,14 @@ package com.att.tdp.bisbis10.model.requests;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class AddDishRequest {
-
+public class UpdateRestaurantRequest {
     private String name;
-    private Double price;
-    private String description;
+    private Boolean isKosher;
+    private List<String> cuisines;
+
+
 }

@@ -2,6 +2,7 @@ package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.entity.Cuisine;
 import com.att.tdp.bisbis10.entity.Restaurant;
+import com.att.tdp.bisbis10.model.requests.AddCuisineRequest;
 import com.att.tdp.bisbis10.service.CuisineService;
 import com.att.tdp.bisbis10.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,16 @@ public class CuisineController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<Cuisine>> getAllCuisines() {
         List<Cuisine> cuisines = cuisineService.getAllCuisines();
         return ResponseEntity.ok(cuisines);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> addCuisine(@RequestBody Cuisine cuisine) {
+    @PostMapping("")
+    public ResponseEntity<?> addCuisine(@RequestBody AddCuisineRequest request) {
         try {
-            cuisineService.addCusine(cuisine);
+            cuisineService.addCuisineByRequest(request);
             return ResponseEntity.status(201).build();
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error adding cuisine: " + e.getMessage());
@@ -44,7 +45,7 @@ public class CuisineController {
             if (!cuisineService.existById(id)) {
                 return ResponseEntity.status(404).body("The cuisine with ID " + id + " does not exist.");
             }
-            cuisineService.deleteCusine(id);
+            cuisineService.deleteCuisine(id);
             return ResponseEntity.status(204).build();
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error deleting restaurant: " + e.getMessage());

@@ -1,7 +1,10 @@
 package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.entity.Dish;
+import com.att.tdp.bisbis10.entity.Order;
 import com.att.tdp.bisbis10.entity.Restaurant;
+import com.att.tdp.bisbis10.model.requests.AddDishRequest;
+import com.att.tdp.bisbis10.model.requests.UpdateDishRequest;
 import com.att.tdp.bisbis10.service.DishService;
 import com.att.tdp.bisbis10.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +35,11 @@ public class DishController {
     @PostMapping("/restaurants/{id}/dishes")
     public ResponseEntity<?> addDish(@RequestBody AddDishRequest request, @PathVariable Integer id) {
         try {
-            // Checking whether there is a restaurant with the id in order to add the dish to it
-            Optional<Restaurant> optionalRestaurant = Optional.ofNullable(restaurantService.findById(id));
-            if (optionalRestaurant.isPresent()) {
-                Restaurant restaurant = optionalRestaurant.get();
-                String name = request.getName();
-                String description = request.getDescription();
-                double price = request.getPrice();
-                dishService.addDish(name, description, price, restaurant);
-                return ResponseEntity.status(201).build();
-            } else {
-                return ResponseEntity.status(404).body("Restaurant not found with id: " + id);
-            }
-        } catch (Exception e) {
+            Dish dish  = dishService.addDish(request,id);
+            return ResponseEntity.status(201).build();
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(404).body("Error adding dish: " + e.getMessage());
+        }catch (RuntimeException e){
             return ResponseEntity.status(500).body("Error adding dish: " + e.getMessage());
         }
 
@@ -77,8 +72,8 @@ public class DishController {
         }
     }
 
-    @PatchMapping("/restaurants/{id}/dishes/{dishId}")
-    public ResponseEntity<?> updateDish(@PathVariable Integer id, @PathVariable Integer dishId, @RequestBody Map<String, Object> updates) {
+    @PutMapping("/restaurants/{id}/dishes/{dishId}")
+    public ResponseEntity<?> updateDish(@PathVariable Integer id, @PathVariable Integer dishId, @RequestBody UpdateDishRequest updates) {
         try {
             Dish existingDish = dishService.getDishByIdAndRestaurantId(dishId,id);
             if(existingDish == null){

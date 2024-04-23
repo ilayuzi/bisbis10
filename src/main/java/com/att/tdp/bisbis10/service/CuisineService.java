@@ -1,6 +1,7 @@
 package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.entity.Cuisine;
+import com.att.tdp.bisbis10.model.requests.AddCuisineRequest;
 import com.att.tdp.bisbis10.repository.CuisineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,17 @@ public class CuisineService {
         return cuisineRepository.findAll();
     }
 
-    public void addCusine(Cuisine cusine) {
-        cuisineRepository.save(cusine);
+    public void addCuisineByRequest(AddCuisineRequest request) {
+        Cuisine cuisine = new Cuisine();
+        cuisine.setCuisineName(request.getCuisineName());
+        cuisineRepository.save(cuisine);
     }
 
-    public void deleteCusine(Integer id) {
+    public void addCuisine(Cuisine cuisine){
+        cuisineRepository.save(cuisine);
+    }
+
+    public void deleteCuisine(Integer id) {
         cuisineRepository.deleteById(id);
     }
 

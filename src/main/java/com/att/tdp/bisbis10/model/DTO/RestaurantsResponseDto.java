@@ -1,4 +1,4 @@
-package com.att.tdp.bisbis10;
+package com.att.tdp.bisbis10.model.DTO;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
-public class RestaurantResponseDto {
+public class RestaurantsResponseDto {
 
     private Integer id;
 
