@@ -39,14 +39,11 @@ public class Dish {
     @NotNull
     private double price;
 
-//    @Column(insertable = false,updatable = false)
-//    private Integer restaurantId;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     @JsonBackReference
     private Restaurant restaurant;
 
-//    public Dish() {
-//    }
+
 }

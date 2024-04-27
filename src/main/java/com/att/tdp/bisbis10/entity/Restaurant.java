@@ -41,12 +41,6 @@ public class Restaurant {
     @NotNull
     private boolean isKosher;
 
-//    @ElementCollection
-//    @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
-//    @Column(name = "cuisine")
-//    private Set<String> cuisines = new HashSet<>();
-//    private List<String> cuisines;
-
     @ManyToMany
     @JoinTable(
             name = "restaurant_cuisine",
@@ -54,9 +48,6 @@ public class Restaurant {
             inverseJoinColumns = @JoinColumn(name = "cuisine_id")
     )
     @JsonManagedReference
-
-//    @OneToMany(mappedBy = "restaurant")
-//    @JsonManagedReference
     private List<Cuisine> cuisines;
 
     @OneToMany(mappedBy = "restaurant")
@@ -72,12 +63,11 @@ public class Restaurant {
     private List<Order> orders;
 
 
-    // Constructor
     public Restaurant() {
     }
 
-    public double getAverageRating () {
-        if(ratings == null || ratings.isEmpty()){
+    public double getAverageRating() {
+        if (ratings == null || ratings.isEmpty()) {
             return 0.0;
         }
         var averageRating = this.ratings.stream().mapToDouble(Rating::getRating).average().orElse(0.0);

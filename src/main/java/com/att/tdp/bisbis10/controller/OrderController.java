@@ -32,7 +32,7 @@ public class OrderController {
     private OrderItemService orderItemService;
 
     @GetMapping()
-    public ResponseEntity<List<Order>> getAllDishes(){
+    public ResponseEntity<List<Order>> getAllDishes() {
         List<Order> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
@@ -41,7 +41,7 @@ public class OrderController {
     public ResponseEntity<?> addOrder(@RequestBody AddOrderRequest request) {
         try {
             Order order = orderService.addOrder(request);
-            return ResponseEntity.status(200).body(order);
+            return ResponseEntity.status(200).body(Map.of("orderId", order.getId()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error adding order: " + e.getMessage());
         }

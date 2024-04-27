@@ -15,7 +15,8 @@ public class RestaurantsResponseDto {
 
     private Integer id;
 
-    @NotEmpty @NotNull
+    @NotEmpty
+    @NotNull
     private String name;
 
     private double averageRating;

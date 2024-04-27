@@ -41,7 +41,7 @@ public class Rating {
     private Restaurant restaurant;
 
 
-    public Rating(){
+    public Rating() {
     }
 
 }

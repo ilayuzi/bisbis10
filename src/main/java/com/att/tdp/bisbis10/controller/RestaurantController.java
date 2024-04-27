@@ -24,7 +24,7 @@ public class RestaurantController {
     @Autowired
     private CuisineService cuisineService;
 
-      // get the restaurats with all the details
+    // get the restaurats with all the details
 //    @GetMapping("")
 //    public ResponseEntity<List<Restaurant>> getAllRestaurants() {
 //        List<Restaurant> restaurants = restaurantService.getAllRestaurants();
@@ -34,39 +34,27 @@ public class RestaurantController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllRestaurants() {
-        try{
+        try {
             List<RestaurantsResponseDto> restaurantsDto = restaurantService.getAllRestaurants();
             return ResponseEntity.ok(restaurantsDto);
-        } catch(Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("Error getting restaurants: " + e.getMessage());
         }
 
     }
 
 
-
-//    @GetMapping(params = "cuisine")
-    @GetMapping("/")
-    public ResponseEntity<?> getRestaurantsByCuisine(@RequestParam(value = "cuisine") String cuisine){
-        try{
+    @GetMapping(params = "cuisine")
+    public ResponseEntity<?> getRestaurantsByCuisine(@RequestParam("cuisine") String cuisine) {
+        try {
             List<RestaurantsResponseDto> restaurantsDto = restaurantService.getRestaurantsByCuisine(cuisine);
             return ResponseEntity.ok(restaurantsDto);
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             return ResponseEntity.status(500).body("Error getting restaurants by cuisine: " + e.getMessage());
         }
     }
 
-//    @PostMapping("/")
-//    public ResponseEntity<?> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
-//        try {
-//            restaurantService.addRestaurant(restaurant);
-//            return ResponseEntity.status(201).build();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Error adding restaurant: " + e.getMessage());
-//        }
-//    }
 
     @PostMapping("")
     public ResponseEntity<?> addRestaurant(@RequestBody AddRestaurantRequest request) {
@@ -92,18 +80,18 @@ public class RestaurantController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRestaurant(@PathVariable Integer id, @RequestBody UpdateRestaurantRequest updates){
-        try{
+    public ResponseEntity<?> updateRestaurant(@PathVariable Integer id, @RequestBody UpdateRestaurantRequest updates) {
+        try {
             Restaurant existingRestaurant = restaurantService.getRestaurantById(id);
 
-            if(existingRestaurant == null){
+            if (existingRestaurant == null) {
                 return ResponseEntity.status(404).body("Restaurant not found with id " + id);
             }
 
             restaurantService.updateRestaurant(existingRestaurant, updates);
             System.out.println("Restaurant " + id + " updated successfully");
             return ResponseEntity.status(200).body(null);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("Error updating restaurant: " + e.getMessage());
         }
     }
@@ -122,18 +110,4 @@ public class RestaurantController {
         }
     }
 
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<?> handleMethodArgumentNotValidException(
-//            MethodArgumentNotValidException exp
-//    ) {
-//        var errors = new HashMap<String,String>();
-//        exp.getBindingResult().getAllErrors()
-//                .forEach(error -> {
-//                    var fieldName = ((FieldError) error).getField();
-//                    var errorMessage = error.getDefaultMessage();
-//                    errors.put(fieldName,errorMessage);
-//                });
-//        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-//    }
 }

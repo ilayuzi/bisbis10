@@ -13,19 +13,19 @@ public class OrderItemService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    public List<OrderItem> getAllOrderItem(){
+    public List<OrderItem> getAllOrderItem() {
         return orderItemRepository.findAll();
     }
 
-    public void addOrderItem (OrderItem orderItem){
+    public void addOrderItem(OrderItem orderItem) {
         orderItemRepository.save(orderItem);
     }
 
-    public void deleteOrderItem(Integer id){
+    public void deleteOrderItem(Integer id) {
         orderItemRepository.deleteById(id);
     }
 
-    public boolean existById (Integer id){
+    public boolean existById(Integer id) {
         return orderItemRepository.existsById(id);
     }
 }

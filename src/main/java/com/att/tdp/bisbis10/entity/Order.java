@@ -37,10 +37,6 @@ public class Order {
     private Restaurant restaurant;
 
 
-//    @Embedded
-//    @ElementCollection
-//    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
-//    @Column(name = "orderItem")
     @OneToMany(mappedBy = "order")
     @JsonManagedReference
     private List<OrderItem> orderItems;

@@ -25,17 +25,18 @@ public class DishService {
         return dishRepository.findAll();
     }
 
-    public Dish addDish (AddDishRequest request, Integer resId){
+    public Dish addDish(AddDishRequest request, Integer resId) {
         // Checking whether there is a restaurant with the id in order to add the dish to it
         Restaurant restaurant = restaurantService.getRestaurantById(resId);
-        if(restaurant == null){
+        if (restaurant == null) {
             throw new NullPointerException("Restaurant not found with id: " + resId);
         }
         String name = request.getName();
         for (Dish dish : restaurant.getDishes()) {
             if (dish.getName().equals(name)) {
-                throw new RuntimeException("There is already a dish with name" + name + " at restaurant " + resId);
-            }}
+                throw new RuntimeException("There is already a dish with name " + name + " at restaurant " + resId);
+            }
+        }
         String description = request.getDescription();
         double price = request.getPrice();
         Dish dish = Dish.builder().name(name).description(description).price(price).restaurant(restaurant).build();
@@ -43,15 +44,15 @@ public class DishService {
         return dish;
     }
 
-    public void deleteDish(Integer id){
+    public void deleteDish(Integer id) {
         dishRepository.deleteById(id);
     }
 
-    public Dish getDishById(Integer id){
+    public Dish getDishById(Integer id) {
         return dishRepository.findById(id).orElse(null);
     }
 
-    public void updateDish(Dish existingDish, UpdateDishRequest updates ){
+    public void updateDish(Dish existingDish, UpdateDishRequest updates) {
         if (updates.getName() != null) {
             existingDish.setName(updates.getName());
         }
@@ -68,10 +69,9 @@ public class DishService {
         return dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
     }
 
-    public boolean existById (Integer id){
+    public boolean existById(Integer id) {
         return dishRepository.existsById(id);
     }
-
 
 
 }

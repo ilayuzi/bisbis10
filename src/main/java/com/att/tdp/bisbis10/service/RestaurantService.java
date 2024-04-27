@@ -30,7 +30,7 @@ public class RestaurantService {
 //        return restaurantRepository.findAll();
 //    }
 
-    public List<RestaurantsResponseDto> getAllRestaurants(){
+    public List<RestaurantsResponseDto> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
         List<RestaurantsResponseDto> restaurantsDto = restaurants.stream()
                 .map(this::convertToDTO)
@@ -65,10 +65,10 @@ public class RestaurantService {
     }
 
     public RestaurantByIdResponseDto getRestaurantByIdRequest(Integer id) {
-       Restaurant restaurant =  restaurantRepository.findById(id).orElse(null);
-       if(restaurant == null){
-           return null;
-       }
+        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        if (restaurant == null) {
+            return null;
+        }
         RestaurantByIdResponseDto restaurantByIdResponseDto = convertRestaurantToDTO(restaurant);
         return restaurantByIdResponseDto;
     }
@@ -83,15 +83,15 @@ public class RestaurantService {
 
     public void updateRestaurant(Restaurant existingRestaurant, UpdateRestaurantRequest updates) {
 
-        if(updates.getName() != null){
+        if (updates.getName() != null) {
             existingRestaurant.setName(updates.getName());
         }
 
-        if(updates.getIsKosher() != null){
+        if (updates.getIsKosher() != null) {
             existingRestaurant.setKosher(updates.getIsKosher());
         }
 
-        if(updates.getCuisines() != null){
+        if (updates.getCuisines() != null) {
             List<String> cuisineNames = updates.getCuisines();
             List<Cuisine> cuisines = getCuisinesFromNames(cuisineNames);
 
@@ -112,10 +112,6 @@ public class RestaurantService {
         return restaurantRepository.existsById(id);
     }
 
-//    public Restaurant findById(Integer id) {
-//        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
-//        return optionalRestaurant.orElseThrow(() -> new FileSystemNotFoundException("Restaurant not found with id: " + id));
-//    }
 
     public RestaurantsResponseDto convertToDTO(Restaurant restaurant) {
         RestaurantsResponseDto dto = new RestaurantsResponseDto();

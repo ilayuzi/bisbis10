@@ -12,7 +12,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orderItems")
-//@Embeddable
 public class OrderItem {
 
     @Id

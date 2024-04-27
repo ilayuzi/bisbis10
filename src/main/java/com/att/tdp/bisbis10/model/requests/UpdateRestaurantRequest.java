@@ -12,5 +12,4 @@ public class UpdateRestaurantRequest {
     private Boolean isKosher;
     private List<String> cuisines;
 
-
 }

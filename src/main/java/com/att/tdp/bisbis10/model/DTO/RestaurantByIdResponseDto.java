@@ -8,6 +8,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class RestaurantByIdResponseDto extends RestaurantsResponseDto{
+public class RestaurantByIdResponseDto extends RestaurantsResponseDto {
     private List<Dish> dishes;
 }

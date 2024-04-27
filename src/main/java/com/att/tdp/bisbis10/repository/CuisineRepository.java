@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface CuisineRepository extends JpaRepository<Cuisine,Integer> {
+public interface CuisineRepository extends JpaRepository<Cuisine, Integer> {
     List<Cuisine> findAllByCuisineNameIn(List<String> cuisineNames);
+
     Optional<Cuisine> findByCuisineName(String cuisineName);
 }

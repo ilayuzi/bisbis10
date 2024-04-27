@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table (name="Cuisines")
+@Table(name = "Cuisines")
 public class Cuisine {
     @Id
     @GeneratedValue(
@@ -41,7 +41,6 @@ public class Cuisine {
     public Cuisine() {
 
     }
-
 
 
 }

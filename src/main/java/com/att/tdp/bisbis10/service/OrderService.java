@@ -26,17 +26,17 @@ public class OrderService {
     @Autowired
     private OrderItemService orderItemService;
 
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    public Order addOrder (AddOrderRequest request){
+    public Order addOrder(AddOrderRequest request) {
         Integer resId = request.getRestaurantId();
         Restaurant restaurant = restaurantService.getRestaurantById(resId);
         if (restaurant == null) {
             throw new NullPointerException("Restaurant not found with id: " + resId);
         }
-        if(restaurant.getDishes().isEmpty()){
+        if (restaurant.getDishes().isEmpty()) {
             throw new RuntimeException("There aren't dishes in restaurant " + restaurant.getId());
         }
 
@@ -45,10 +45,10 @@ public class OrderService {
 
         List<OrderItemDTO> items = request.getOrderItems();
         List<OrderItem> orderItems = new ArrayList<>();
-        for (OrderItemDTO itemDTO : items){
+        for (OrderItemDTO itemDTO : items) {
             Integer dishId = itemDTO.getDishId();
             boolean dishExists = false;
-            for (Dish dish : restaurant.getDishes()) {
+            for (Dish dish : restaurant.getDishes()) { // loop to check if the dish exists in the restaurant
                 if (dish.getId().equals(dishId)) {
                     dishExists = true;
                     OrderItem item = new OrderItem();
@@ -59,18 +59,19 @@ public class OrderService {
                     break; // Exit the loop once the dish is found
                 }
                 throw new RuntimeException("There is no dish with id " + dishId + " in restaurant " + restaurant.getId());
-            }}
+            }
+        }
         order.setOrderItems(orderItems);
         orderRepository.save(order);
-        orderItems.forEach(item-> orderItemService.addOrderItem(item));
+        orderItems.forEach(item -> orderItemService.addOrderItem(item));
         return order;
     }
 
-    public void deleteOrder(Integer id){
+    public void deleteOrder(Integer id) {
         orderRepository.deleteById(id);
     }
 
-    public boolean existById (Integer id){
+    public boolean existById(Integer id) {
         return orderRepository.existsById(id);
     }
 }

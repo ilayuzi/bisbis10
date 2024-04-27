@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN r.cuisines c WHERE c.cuisineName = :cuisineName")
     List<Restaurant> getRestaurantsByCuisine(@Param("cuisineName") String cuisineName);
 

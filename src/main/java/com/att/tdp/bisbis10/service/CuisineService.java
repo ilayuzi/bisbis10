@@ -25,7 +25,7 @@ public class CuisineService {
         cuisineRepository.save(cuisine);
     }
 
-    public void addCuisine(Cuisine cuisine){
+    public void addCuisine(Cuisine cuisine) {
         cuisineRepository.save(cuisine);
     }
 
@@ -37,11 +37,11 @@ public class CuisineService {
         return cuisineRepository.existsById(id);
     }
 
-    public List<Cuisine> getCuisinesByNames(List<String> cuisineNames){
+    public List<Cuisine> getCuisinesByNames(List<String> cuisineNames) {
         return cuisineRepository.findAllByCuisineNameIn(cuisineNames);
     }
 
-    public Optional<Cuisine> getCuisineByName(String cuisineName){
+    public Optional<Cuisine> getCuisineByName(String cuisineName) {
         return cuisineRepository.findByCuisineName(cuisineName);
     }
 }

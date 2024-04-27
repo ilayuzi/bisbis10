@@ -35,11 +35,11 @@ public class DishController {
     @PostMapping("/restaurants/{id}/dishes")
     public ResponseEntity<?> addDish(@RequestBody AddDishRequest request, @PathVariable Integer id) {
         try {
-            Dish dish  = dishService.addDish(request,id);
+            Dish dish = dishService.addDish(request, id);
             return ResponseEntity.status(201).build();
         } catch (NullPointerException e) {
             return ResponseEntity.status(404).body("Error adding dish: " + e.getMessage());
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body("Error adding dish: " + e.getMessage());
         }
 
@@ -75,8 +75,8 @@ public class DishController {
     @PutMapping("/restaurants/{id}/dishes/{dishId}")
     public ResponseEntity<?> updateDish(@PathVariable Integer id, @PathVariable Integer dishId, @RequestBody UpdateDishRequest updates) {
         try {
-            Dish existingDish = dishService.getDishByIdAndRestaurantId(dishId,id);
-            if(existingDish == null){
+            Dish existingDish = dishService.getDishByIdAndRestaurantId(dishId, id);
+            if (existingDish == null) {
                 return ResponseEntity.status(404).body("Dish " + dishId + " not found in restaurant " + id);
             }
             dishService.updateDish(existingDish, updates);
